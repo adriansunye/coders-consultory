@@ -44,7 +44,7 @@ export default function UpdateConsult () {
                         </tr>
                         <tr>
                             <th>
-                                <label>Email: </label>
+                                <label>Description: </label>
                             </th>
                             <td> 
                                 <input value={inputs.description} type="text" name="description" onChange={handleChange} />

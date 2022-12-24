@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 
 import Home from '@views/Home/Home';
-import UpdateConsult from '@components/layout/structuring/Home/UpdateConsult/UpdateConsult';
-import CreateConsult from '@components/layout/structuring/Home/CreateConsult/CreateConsult';
+import Edit from '@views/Edit/Edit';
+import Create from '@views/Create/Create';
 import ErrorPage from '@views/ErrorPage/ErrorPage';
 
 export class PublicRoute extends React.Component {
@@ -17,8 +17,8 @@ export class PublicRoute extends React.Component {
         <Router>
             <Routes>
                 <Route index element={<Home/>}/>
-                <Route path="consult/create" element={<CreateConsult />} />
-                <Route path="consult/:id/edit" element={<UpdateConsult />} />
+                <Route path="consult/create" element={<Create />} />
+                <Route path="consult/:id/edit" element={<Edit />} />
                 <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </Router>

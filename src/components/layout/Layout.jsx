@@ -1,4 +1,5 @@
 import Header from "@components/layout/navigation/Header"
+import Footer from "@components/layout/navigation/Footer"
 import { Helmet } from "react-helmet"
 import useTheme from "@services/Providers/ThemeProvider"
 
@@ -15,6 +16,7 @@ const Layout = ({ children }) => {
             </Helmet>
             <Header />
             {children}
+            <Footer/>
         </>
     )
 }
