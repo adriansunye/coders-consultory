@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-export default function UpdateUsers () {
+export default function UpdateConsult () {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const {id} = useParams();
     useEffect(() => {
-        getUser();
+        getConsult();
     }, []);
-    function getUser() {
+    function getConsult() {
         axios.get(`http://localhost:8888/coders-consultory-server/api/user/${id}`).then(function(response) {
             console.log(response.data);
             setInputs(response.data);
@@ -36,10 +36,10 @@ export default function UpdateUsers () {
                     <tbody>
                         <tr>
                             <th>
-                                <label>Name: </label>
+                                <label>Title: </label>
                             </th>
                             <td>
-                                <input value={inputs.name} type="text" name="name" onChange={handleChange} />
+                                <input value={inputs.title} type="text" name="title" onChange={handleChange} />
                             </td>
                         </tr>
                         <tr>
@@ -47,15 +47,15 @@ export default function UpdateUsers () {
                                 <label>Email: </label>
                             </th>
                             <td> 
-                                <input value={inputs.email} type="text" name="email" onChange={handleChange} />
+                                <input value={inputs.description} type="text" name="description" onChange={handleChange} />
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label>Mobile: </label>
+                                <label>Image: </label>
                             </th>
                             <td>
-                                <input value={inputs.mobile} type="text" name="mobile" onChange={handleChange} />
+                                <input value={inputs.image_path} type="text" name="image_path" onChange={handleChange} />
                             </td>
                         </tr>
                         <tr>
