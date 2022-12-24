@@ -1,58 +1,39 @@
 import useTheme from "@services/Providers/ThemeProvider"
-import { Navbar, Nav, Row, Col } from "react-bootstrap"
+import usePage from "@services/Providers/PageProvider"
+import { Nav } from "react-bootstrap"
 import { BiHomeCircle, BiSearch, BiAddToQueue, BiHeart, BiUserCircle } from "react-icons/bi";
+import { BottomNavigation, BottomNavigationAction, Paper, Link } from "@mui/material";
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
-const Header = () => {
+const Footer = () => {
     const { theme } = useTheme();
+    const { page, setPage } = usePage();
+    const [value, setValue] = useState(page);
+
+    const handleChange = (event, newValue) => {
+        setPage(newValue);
+        setValue(newValue);
+    };
+
     return (
         <>
-        <div className="fixed-bottom" bg={theme} variant={theme}>
-            <Nav fill defaultActiveKey="/" className="py-5">
-                <Nav.Item>
-                    <Nav.Link to="/">
-                        <BiHomeCircle 
-                            size="2em" 
-                            color="linear-gradient(rgba(136, 139, 244, 1), rgba(81, 81, 198, 1)"
-                        />
-                    </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="link-1">
-                        <BiSearch 
-                            size="2em" 
-                            color="linear-gradient(rgba(136, 139, 244, 1), rgba(81, 81, 198, 1)"
-                        />
-                    </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link href="consult/create" eventKey="link-2">
-                        <BiAddToQueue 
-                            size="2em" 
-                            color="linear-gradient(rgba(136, 139, 244, 1), rgba(81, 81, 198, 1)"
-                        />
-                    </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link className="gradient" eventKey="link-2">
-                        <BiHeart 
-                            size="2em" 
-                            color="linear-gradient(rgba(136, 139, 244, 1), rgba(81, 81, 198, 1)"
-                        />
-                    </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="link-2">
-                        <BiUserCircle 
-                            size="2em" 
-                            color="linear-gradient(rgba(136, 139, 244, 1), rgba(81, 81, 198, 1)"
-                        />
-                    </Nav.Link>
-                </Nav.Item>
-            </Nav>
-            </div>
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                <BottomNavigation
+                    showLabels
+                    value={value}
+                    onChange={handleChange}
+                >
+                    <BottomNavigationAction component={RouterLink} to="/" label="Home" value="home" icon={<BiHomeCircle />} />
+                    <BottomNavigationAction component={RouterLink} label="Search" value="search" icon={<BiSearch />} />
+                    <BottomNavigationAction component={RouterLink} to="/consult/create" label="Create" value="create" icon={<BiAddToQueue />} />
+                    <BottomNavigationAction component={RouterLink} label="Favorites" value="favorites" icon={<BiHeart />} />
+                    <BottomNavigationAction component={RouterLink} label="Profile" value="profile" icon={<BiUserCircle />} />
+                </BottomNavigation>
+            </Paper>
         </>
     )
 }
 
-export default Header;
+export default Footer;
 

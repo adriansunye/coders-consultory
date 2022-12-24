@@ -6,8 +6,8 @@ export const Main = () => {
     const { theme } = useTheme()
 
     return (
-        <MainStyled fluid className={theme}>
-            <ListConsults/>
+        <MainStyled fluid className={`mt-5 p-3 ${theme}`} >
+            <ListConsults />
         </MainStyled>
     )
 }

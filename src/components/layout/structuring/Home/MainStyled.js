@@ -5,6 +5,6 @@ import { Container } from "react-bootstrap"
 export const MainStyled = styled(Container)`
     .dark{
         background: ${colorVariables.grey};
-    color: gray;
+        color: gray;
     }
 `

@@ -1,55 +1,75 @@
 import axios from "axios"
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Button, Container, Row, Col } from 'react-bootstrap'
+import useTheme from "@services/Providers/ThemeProvider"
+import { BiUserCircle, BiDotsHorizontalRounded } from "react-icons/bi";
+import OptionsPopover from "./OptionsPopover";
+
 export default function ListUser() {
     const [consults, setConsults] = useState([]);
+    const [anchorEl, setAnchorEl] = useState();
+    const [destination, setDestination] = useState();
+    const { theme } = useTheme();
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     useEffect(() => {
         getConsults();
     }, []);
-
     function getConsults() {
-        axios.get('http://localhost:8888/coders-consultory-server/api/users/').then(function(response) {
+        axios.get('http://localhost:8888/coders-consultory-server/api/users/').then(function (response) {
             console.log(response.data);
             setConsults(response.data);
         });
     }
     const deleteConsult = (id) => {
-        axios.delete(`http://localhost:8888/coders-consultory-server/api/user/${id}/delete`).then(function(response){
+        axios.delete(`http://localhost:8888/coders-consultory-server/api/user/${id}/delete`).then(function (response) {
             console.log(response.data);
             getConsults();
         });
     }
-    return (
-        <div>
-            <h1>List Users</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>User</th>
-                        <th>Image</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {consults.map((consult, key) =>
-                        <tr key={key}>
-                            <td>{consult.id}</td>
-                            <td>{consult.title}</td>
-                            <td>{consult.description}</td>
-                            <td>{consult.user}</td>
-                            <td>{consult.image_path}</td>
-                            <td>
-                                <Link to={`consult/${consult.id}/edit`} style={{marginRight: "10px"}}>Edit</Link>
-                                <button onClick={() => deleteConsult(consult.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    )}
+    const handleClick = (event) => {
+        setDestination(event.currentTarget.name)
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
-                </tbody>
-            </table>
-        </div>
+    return (
+        <>
+            {consults.map((consult, key) =>
+                <Container key={key} className="mt-3 border rounded p-3">
+                    <Row>
+                        <Col>
+                            {consult.user}
+                        </Col>
+                        <Col className="d-flex justify-content-end">
+                            <Button name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
+                                <BiDotsHorizontalRounded
+                                    size="2em"
+                                    color={theme === "dark" ? "rgba(136, 139, 244, 1)" : "rgba(81, 81, 198, 1)"}
+                                />
+                            </Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            {consult.title}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            {consult.description}
+                        </Col>
+                    </Row>
+                    <Row>
+                        {consult.image_path === null ? "" : <img src={consult.image_path} alt="consult" />}
+                    </Row>
+                </Container>
+            )}
+            <OptionsPopover deleteConsult={deleteConsult} destination={destination} id={id} open={open} anchorEl={anchorEl} onClose={() => handleClose()} />
+        </>
     )
 }

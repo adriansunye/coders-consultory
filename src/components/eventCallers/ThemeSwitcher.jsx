@@ -1,7 +1,6 @@
 import { Button } from "react-bootstrap"
-import  useTheme  from "@services/Providers/ThemeProvider"
-import Moon from "@assets/moon.svg"
-import Sun from "@assets/sun.svg"
+import { useTheme } from "@mui/material";
+import { BsSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 
 
 function ThemeSwitcher() {
@@ -12,11 +11,7 @@ function ThemeSwitcher() {
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="button-theme"
         >
-            <img
-                src={theme === "dark" ? Sun : Moon}
-                className="theme-icon"
-                alt="theme"
-            />
+            {theme === "dark" ? <BsFillMoonStarsFill/> : <BsSunFill/>}
         </Button>
     )
 }
