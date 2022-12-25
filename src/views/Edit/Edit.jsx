@@ -1,15 +1,24 @@
-import { Main } from "@components/layout/structuring/Edit/Main"
+import UpdateConsults from "@components/layout/structuring/Edit/UpdateConsult"
 import Layout from "@components/layout/Layout"
-import Header from "@components/layout/navigation/Header"
-import Footer from "@components/layout/navigation/Footer"
+import TopNavigation from "@components/layout/navigation/TopNavigation"
+import MobileNavigation from "@components/layout/navigation/MobileNavigation"
+import usePage  from "@services/Providers/PageProvider"
+import Box from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+
 
 const Edit = () => {
+    const { setPage } = usePage();
+    setPage("edit")
 
     return (
         <Layout>
-            <Header />
-            <Main />
-            <Footer/>
+            <TopNavigation />
+            <CssBaseline />
+            <Box sx={{ m: 1, pb:8 }}>
+                <UpdateConsults />
+            </Box>
+            <MobileNavigation/>
         </Layout>
     )
 }

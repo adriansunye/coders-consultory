@@ -1,7 +1,14 @@
 import { Popover,  ListItemButton, ListItemText } from '@mui/material';
+import usePage from "@services/Providers/PageProvider"
+import { Link as RouterLink } from "react-router-dom";
 
 function OptionsPopover(props) {
+    const { setPage } = usePage();
     const { deleteConsult, destination, ...otherProps } = props;
+    
+    const handleChange = (event) => {
+        setPage("edit");
+    };
     return (
         <Popover
             {...otherProps}
@@ -14,7 +21,7 @@ function OptionsPopover(props) {
                 horizontal: 'left',
             }}
         >
-            <ListItemButton id={props.id} component="a" href={`consult/${destination}/edit`}>
+            <ListItemButton onClick={handleChange} id={props.id} component={RouterLink} to={`consult/${destination}/edit`}>
                 <ListItemText primary="Edit" />
             </ListItemButton>
             <ListItemButton onClick={function(event){ deleteConsult(destination); otherProps.onClose()}}>

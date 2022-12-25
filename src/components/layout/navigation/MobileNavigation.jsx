@@ -5,7 +5,7 @@ import { BottomNavigation, BottomNavigationAction, Paper, Link } from "@mui/mate
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-const Footer = () => {
+const MobileNavigation = () => {
     const { page, setPage } = usePage();
     const [value, setValue] = useState(page);
 
@@ -33,5 +33,5 @@ const Footer = () => {
     )
 }
 
-export default Footer;
+export default MobileNavigation;
 
