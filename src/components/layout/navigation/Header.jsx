@@ -1,38 +1,40 @@
 import usePage from "@services/Providers/PageProvider"
-
+import { Nav } from "react-bootstrap"
+import { BiHomeCircle, BiSearch, BiAddToQueue, BiHeart, BiUserCircle } from "react-icons/bi";
+import { BottomNavigation, BottomNavigationAction, Paper, Link } from "@mui/material";
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import ThemeSwitcher from "@components/eventCallers/ThemeSwitcher"
 import { IoIosArrowBack, IoIosArrowUp } from "react-icons/io";
 import { ReactComponent as Logo } from '@assets/icons8-old-vmware-logo.svg'
-import { NavStyled } from "@components/layout/navigation/HeaderStyled";
+
+
 
 const Header = () => {
-    const { page } = usePage();
+    const { page, setPage } = usePage();
+    const [value, setValue] = useState(page);
+
+    const handleChange = (event, newValue) => {
+        setPage(newValue);
+        setValue(newValue);
+    };
+
     return (
         <>
-            <div className={`py-2 fixed-top`}>
-                <NavStyled fill defaultActiveKey="/">
-                    <NavStyled.Item>
-                        <NavStyled.Link href={page ==="home" ? "/" : "/"}>
-                            {page === "home" ?  
-                                <IoIosArrowUp 
-                                    size="2em" 
-                                    
-                                /> : 
-                                <IoIosArrowBack
-                                    size="2em"
-                                />}
-                        </NavStyled.Link>
-                    </NavStyled.Item>
-                    <NavStyled.Item className={page ==="home" ? "" : "align-center"} >
-                        {page === "home" ? <Logo /> : page}
-                    </NavStyled.Item>
-                    <NavStyled.Item>
-                        <ThemeSwitcher />
-                    </NavStyled.Item>
-                </NavStyled>
-            </div>
+            
+                <BottomNavigation
+                    showLabels
+                    value={value}
+                    onChange={handleChange}
+                >
+                    <BottomNavigationAction component={RouterLink} value="home" icon={<IoIosArrowBack />} />
+                    <BottomNavigationAction label={page} value="home" />
+                    <ThemeSwitcher/>
+                </BottomNavigation>
+            
         </>
     )
 }
 
 export default Header;
+
