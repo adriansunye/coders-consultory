@@ -1,7 +1,6 @@
 import usePage from "@services/Providers/PageProvider"
-import { Nav } from "react-bootstrap"
 import { BiHomeCircle, BiSearch, BiAddToQueue, BiHeart, BiUserCircle } from "react-icons/bi";
-import { BottomNavigation, BottomNavigationAction, Paper, Link } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 

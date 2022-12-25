@@ -19,6 +19,12 @@ export const ColorModeProvider = ({ children }) => {
         () =>
             createTheme({
                 palette: {
+                    primary: {
+                        light: '#757ce8',
+                        main: '#3f50b5',
+                        dark: '#ab003c',
+                        contrastText: '#fff',
+                    },
                     mode,
                 },
             }),

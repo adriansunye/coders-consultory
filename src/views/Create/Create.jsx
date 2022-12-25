@@ -3,7 +3,7 @@ import Layout from "@components/layout/Layout"
 import usePage from "@services/Providers/PageProvider"
 import TopNavigation from "@components/layout/navigation/TopNavigation"
 import MobileNavigation from "@components/layout/navigation/MobileNavigation"
-import Box from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const Create = () => {
