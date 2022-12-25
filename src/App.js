@@ -4,26 +4,16 @@ import { PublicRoute } from '@components/routing/PublicRoute/PublicRoute';
 import './App.scss';
 
 import {PageProvider} from "@services/Providers/PageProvider"
+import { ColorModeProvider } from '@services/Providers/ColorModeProvider';
 
-
-
-  import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
 
 function App() {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <CssBaseline />
-      <PageProvider>
-        <PublicRoute/>
-        </PageProvider>
-    </ThemeProvider>
+    <PageProvider>
+      <ColorModeProvider>
+          <PublicRoute/>
+      </ColorModeProvider>
+    </PageProvider>
   );
 }
 

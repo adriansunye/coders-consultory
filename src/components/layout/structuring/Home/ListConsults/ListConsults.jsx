@@ -2,7 +2,6 @@ import axios from "axios"
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Row, Col } from 'react-bootstrap'
-import useTheme from "@services/Providers/ThemeProvider"
 import { BiUserCircle, BiDotsHorizontalRounded } from "react-icons/bi";
 import OptionsPopover from "./OptionsPopover";
 
@@ -10,7 +9,6 @@ export default function ListUser() {
     const [consults, setConsults] = useState([]);
     const [anchorEl, setAnchorEl] = useState();
     const [destination, setDestination] = useState();
-    const { theme } = useTheme();
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -49,7 +47,7 @@ export default function ListUser() {
                             <Button name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
                                 <BiDotsHorizontalRounded
                                     size="2em"
-                                    color={theme === "dark" ? "rgba(136, 139, 244, 1)" : "rgba(81, 81, 198, 1)"}
+                                    
                                 />
                             </Button>
                         </Col>

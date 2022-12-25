@@ -1,4 +1,3 @@
-import useTheme from "@services/Providers/ThemeProvider"
 import usePage from "@services/Providers/PageProvider"
 import { Nav } from "react-bootstrap"
 import { BiHomeCircle, BiSearch, BiAddToQueue, BiHeart, BiUserCircle } from "react-icons/bi";
@@ -7,7 +6,6 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 const Footer = () => {
-    const { theme } = useTheme();
     const { page, setPage } = usePage();
     const [value, setValue] = useState(page);
 
