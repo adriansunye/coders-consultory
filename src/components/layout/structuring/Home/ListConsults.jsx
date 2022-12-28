@@ -33,13 +33,13 @@ export default function ListUser() {
         getConsults();
     }, []);
     function getConsults() {
-        axios.get('http://localhost:8888/coders-consultory-server/api/users/').then(function (response) {
+        axios.get('http://localhost:8888/coders-consultory-server/api/consults/').then(function (response) {
             console.log(response.data);
             setConsults(response.data);
         });
     }
     const deleteConsult = (id) => {
-        axios.delete(`http://localhost:8888/coders-consultory-server/api/user/${id}/delete`).then(function (response) {
+        axios.delete(`http://localhost:8888/coders-consultory-server/api/consults/${id}`).then(function (response) {
             console.log(response.data);
             getConsults();
         });

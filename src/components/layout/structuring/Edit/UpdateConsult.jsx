@@ -27,9 +27,23 @@ export default function UpdateConsult() {
         getConsult();
     }, []);
     function getConsult() {
-        axios.get(`http://localhost:8888/coders-consultory-server/api/user/${id}`).then(function (response) {
+        axios.get(`http://localhost:8888/coders-consultory-server/api/consults/${id}`).then(function (response) {
             console.log(response.data);
             setInputs(response.data);
+        });
+    }
+    const deleteConsult = (id) => {
+        axios.delete(`http://localhost:8888/coders-consultory-server/api/consults/${id}`).then(function (response) {
+            console.log(response.data);
+            navigate('/');
+        });
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(inputs)
+        axios.put(`http://localhost:8888/coders-consultory-server/api/consults/${id}`, inputs).then(function (response) {
+            console.log(response.data);
+            navigate('/');
         });
     }
     const handleChange = (event) => {
@@ -45,25 +59,7 @@ export default function UpdateConsult() {
         setAnchorEl(null);
     }
 
-    const deleteConsult = (id) => {
-        axios.delete(`http://localhost:8888/coders-consultory-server/api/user/${id}/delete`).then(function (response) {
-            console.log(response.data);
-            navigate('/');
-        });
-    }
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(inputs)
-        axios.put(`http://localhost:8888/coders-consultory-server/api/user/${id}/edit`, inputs).then(function (response) {
-            console.log(response.data);
-            navigate('/');
-        });
-
-
-
-    }
+    
     return (
         <Box sx={{ m: 1, backgroundColor: "background.default" }}>
             <Box display="flex"

@@ -53,7 +53,7 @@ export default function CreateConsult() {
         const data = { ...otherInputs }
         const parsedData = JSON.stringify(data);
         body.append('_jsonData', parsedData);
-        axios.post('http://localhost:8888/coders-consultory-server/api/user/save', body).then(function (response) {
+        axios.post('http://localhost:8888/coders-consultory-server/api/consults', body).then(function (response) {
             console.log(response.data);
             setPage("home")
             navigate('/');
