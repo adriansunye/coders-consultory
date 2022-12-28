@@ -1,0 +1,28 @@
+<Grid item sx={{minWidth: 350, maxWidth: 350}}>
+                                <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
+                            </Grid>
+                            <Grid item xs={12} sm container>
+                                <Grid item xs container direction="column" spacing={2}>
+                                    <Grid item xs>
+                                        <Typography gutterBottom variant="subtitle1" component="div">
+                                            {consult.title}
+                                        </Typography>
+                                        <Typography variant="body2" gutterBottom>
+                                            {consult.description}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {consult.user}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography sx={{ cursor: 'pointer' }} variant="body2">
+                                            {consult.created_at}
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid item>
+                                <ButtonBase name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
+                                    <BiDotsVerticalRounded size="2em" />
+                                </ButtonBase>
+                                </Grid>
+                            </Grid>

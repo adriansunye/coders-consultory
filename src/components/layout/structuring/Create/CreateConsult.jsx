@@ -1,45 +1,36 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import usePage from "@services/Providers/PageProvider" 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Grid, Input, Typography, Paper, Box, TextField, Button } from "@mui/material";
-import FileUploader from "./FileUploader";
-
-
-
+import { Grid, Paper, Box, TextField, Button, styled } from "@mui/material";
 
 export default function CreateConsult() {
+    const { setPage } = usePage();
     const navigate = useNavigate();
-    
     const [inputs, setInputs] = useState([]);
+    const fileInput = useRef();
 
     const handleChange = (event) => {
         const name = event.target.name;
-        let value = event.target.files ? event.target.files[0]  : event.target.value;
-       
-        setInputs(values => ({...values, [name]: value}));
+        let value = event.target.files ? event.target.files[0] : event.target.value;
+        setInputs(values => ({ ...values, [name]: value }));
     }
 
-
     const handleSubmit = (event) => {
-        event.preventDefault();     
-        
+        event.preventDefault();
         const { fileMedia, ...otherInputs } = inputs;
         const body = new FormData();
-        // you have to put the images in the same field, and the server will receive an array
         body.append('image', inputs.fileMedia);
-        // the other data to send
-        const data = {
-            ...otherInputs
-          }
-          const parsedData = JSON.stringify(data);
+        const data = { ...otherInputs }
+        const parsedData = JSON.stringify(data);
         body.append('_jsonData', parsedData);
-
-        axios.post('http://localhost:8888/coders-consultory-server/api/user/save', body).then(function(response){
+        axios.post('http://localhost:8888/coders-consultory-server/api/user/save', body).then(function (response) {
             console.log(response.data);
+            setPage("home")
             navigate('/');
         });
     }
-    
+
     return (
         <Box fullWidth display="flex"
             justifyContent="center"
@@ -53,9 +44,19 @@ export default function CreateConsult() {
                 backgroundColor: (theme) =>
                     theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
             }}>
+                
                 <Grid container display="flex"
                     justifyContent="center"
                     alignItems="center" spacing={2}>
+                    <Grid item sx={{minWidth: 350, maxWidth: 350}}>
+                        <Button 
+                                variant="contained" 
+                                color="primary" 
+                                onClick={()=>fileInput.current.click()}
+                            >
+                                upload file
+                        </Button>                            
+                    </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs direction="column" spacing={2}>
                             <Grid item xs>
@@ -64,18 +65,15 @@ export default function CreateConsult() {
                                     component="form"
                                     onSubmit={handleSubmit}
                                     autoComplete="off"
-                                >
-                                    <div className="form-row">
-            <div className="form-group col-md-6">
-              <label>Select File :</label>
-              <input
-                type="file"
-                className="form-control"
-                name="fileMedia"
-                onChange={handleChange}
-              />
-            </div>
-            </div>
+                                >   
+                                <input 
+                                    name="fileMedia"
+                                    ref={fileInput} 
+                                    type="file" 
+                                    onChange={handleChange}
+                                    style={{ display: 'none' }} 
+                                />
+                                
                                     <TextField
                                         fullWidth
                                         sx={{ my: 1 }}
@@ -103,14 +101,6 @@ export default function CreateConsult() {
                                         label="User"
                                         onChange={handleChange}
                                         name="user"
-                                    />
-                                    <TextField
-                                        fullWidth
-                                        sx={{ my: 1 }}
-                                        id="imageInput"
-                                        label="image"
-                                        onChange={handleChange}
-                                        name="image_path"
                                     />
                                     <Box>
                                         <Button

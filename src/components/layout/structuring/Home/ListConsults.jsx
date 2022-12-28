@@ -1,8 +1,8 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { BiDotsHorizontalRounded, BiUserCircle } from "react-icons/bi";
 import OptionsPopover from "./OptionsPopover";
-import { styled, ButtonBase, Typography, Paper, Box, Grid} from '@mui/material';
+import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography } from '@mui/material';
 
 const Img = styled('img')({
     margin: 'auto',
@@ -41,57 +41,76 @@ export default function ListUser() {
         setAnchorEl(null);
     };
 
+    function daysDifference(date) {
+
+        var diff = new Date().setHours(12) - new Date(date).setHours(12);
+        return Math.round(diff/8.64e7);
+      }
+
     return (
         <>
-            {consults.map((consult, key) =>
-                <Box key={key} display="flex"
-                    justifyContent="center"
-                    alignItems="center">
-                    <Paper elevation={5} sx={{
-                        borderRadius: '16px',
-                        p: 2,
-                        mx: 2,
-                        my: 1,
-                        flexGrow: 1,
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+            <Box sx={{ m: 1, pb: 8, backgroundColor: "background.default" }}>
+                {consults.map((consult, key) =>
+                    <Box key={key} display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Paper elevation={5} sx={{
+                            borderRadius: '13px',
+                            p: 2,
+                            mx: 2,
+                            my: 1,
+                            flexGrow: 1,
+                            backgroundColor: "background.paper"
                         }}>
-                        <Grid container display="flex"
-                    justifyContent="center"
-                    alignItems="center" spacing={2}>
-                            <Grid item sx={{maxWidth: 350}}>
-                                <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
-                            </Grid>
-                            <Grid item xs={12} sm container>
-                                <Grid item xs container direction="column" spacing={2}>
-                                    <Grid item xs>
+                            <Grid container display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                <Grid item xs={12} container >
+                                    <Grid item xs container>
+                                        <IconButton sx={{ p: 0 }}>
+                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                        </IconButton>
+                                        <Box sx={{ mt: 1, ml: 1 }}>
+                                            {consult.user}
+                                        </Box>
+                                    </Grid>
+                                    <Grid item>
+                                        <ButtonBase name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
+                                            <BiDotsHorizontalRounded size="2em" />
+                                        </ButtonBase>
+                                    </Grid>
+                                    <Grid item container >
                                         <Typography gutterBottom variant="subtitle1" component="div">
                                             {consult.title}
                                         </Typography>
+                                    </Grid>
+                                    <Grid item container>
                                         <Typography variant="body2" gutterBottom>
                                             {consult.description}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {consult.user}
+                                    </Grid>
+                                    <Grid item container>
+                                        <Typography variant="body2">
+                                            {daysDifference(consult.created_at) === 1 ? 
+                                                daysDifference(consult.created_at)+" day" : 
+                                                daysDifference(consult.created_at)+" days" } ago.
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
-                                        <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                            {consult.created_at}
-                                        </Typography>
-                                    </Grid>
+                                    
                                 </Grid>
-                                <Grid item>
-                                <ButtonBase name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
-                                    <BiDotsVerticalRounded size="2em" />
-                                </ButtonBase>
-                                </Grid>
+                                <Grid item sx={{minWidth: 350, maxWidth: 350}}>
+                                <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
                             </Grid>
-                        </Grid>
-                    </Paper>
-                </Box>
-            )}
-            <OptionsPopover deleteConsult={deleteConsult} destination={destination} id={id} open={open} anchorEl={anchorEl} onClose={() => handleClose()} />
+
+                            </Grid>
+                        </Paper>
+                    </Box>
+                )}
+                <OptionsPopover deleteConsult={deleteConsult} destination={destination} id={id} open={open} anchorEl={anchorEl} onClose={() => handleClose()} />
+            </Box>
         </>
+
     )
 }

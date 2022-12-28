@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext, useMemo } from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+
 export const ColorModeContext = createContext({
     toggleColorMode: () => { }
 });
@@ -15,21 +16,42 @@ export const ColorModeProvider = ({ children }) => {
         }),
         [],
     );
+
+
     const theme = useMemo(
         () =>
             createTheme({
                 palette: {
-                    primary: {
-                        light: '#757ce8',
-                        main: '#3f50b5',
-                        dark: '#3f50b5',
-                        contrastText: '#fff',
-                    },
                     mode,
-                },
+                    ...(mode === 'light' && {
+                        primary: {
+                            main: '#806EDF',
+                        },
+                        background: {
+                            default: '#F7F7FD',
+                            paper: '#fefcfe',
+                        },
+                    }),
+                    ...(mode === 'dark' && {
+                        primary: {
+                            main: '#C88EE4',
+                        },
+                        background: {
+                            default: '#1D192F',
+                            paper: '#262138',
+                        },
+                    }),
+                    secondary: {
+                        main: '#f50057',
+                    },
+                    text: {
+                        secondary: '#7268DC',
+                    },
+                }
             }),
         [mode],
     );
+
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>

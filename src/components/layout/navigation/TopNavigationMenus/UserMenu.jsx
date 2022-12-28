@@ -10,6 +10,7 @@ function UserMenu(props) {
 
     return (
         <Menu
+            
             sx={{ mt: '45px' }}
             id="menu-appbar"
             anchorEl={props.anchorElUser}
@@ -32,7 +33,7 @@ function UserMenu(props) {
                             theme.palette.mode === "light" ? <BsSunFill /> : <BsFillMoonStarsFill />
                         }
                     </Typography> : null}
-                    <Typography textAlign="center" onClick={setting === "Theme" ? colorMode.toggleColorMode : null}>
+                    <Typography color="text.primary" textAlign="center" onClick={setting === "Theme" ? colorMode.toggleColorMode : null}>
                         {setting}
                     </Typography>
                 </MenuItem>

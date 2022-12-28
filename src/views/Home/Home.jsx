@@ -13,9 +13,7 @@ const Home = () => {
         <Layout>
             <TopNavigation />
             <CssBaseline />
-            <Box sx={{ m: 1, pb:8 }}>
-                <ListConsults />
-            </Box>
+            <ListConsults />
             <MobileNavigation />
         </Layout>
     )
