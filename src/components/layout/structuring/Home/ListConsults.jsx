@@ -109,7 +109,7 @@ export default function ListUser() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <Grid item sx={{ minWidth: 350, maxWidth: 350 }}>
+                                <Grid item sx={{ mt:2, minWidth: 350, maxWidth: 350 }}>
                                     <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
                                 </Grid>
                                 <Grid item xs={10} container>

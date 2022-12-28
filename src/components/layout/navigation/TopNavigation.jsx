@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import AdbIcon from '@mui/icons-material/Adb'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { BiGridHorizontal } from "react-icons/bi";
 import {AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip} from '@mui/material';
 import UserMenu from "@components/layout/navigation/TopNavigationMenus/UserMenu";
 
@@ -45,7 +46,8 @@ const TopNavigation = () => {
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                            {page !== "home" ? 
+                            
+                            
                                 <IconButton
                                     size="large"
                                     aria-label="account of current user"
@@ -56,9 +58,11 @@ const TopNavigation = () => {
                                     to="/"
                                     onClick={() => setPage("home")}
                                 >
+                                    {page !== "home" ? 
                                     <ArrowBackIosNewIcon />
+                                    : <BiGridHorizontal/>}
                                 </IconButton> 
-                            : null}
+                            
                         </Box>
                         <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                         <Typography

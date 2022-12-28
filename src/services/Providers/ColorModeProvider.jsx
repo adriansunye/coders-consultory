@@ -31,24 +31,28 @@ export const ColorModeProvider = ({ children }) => {
                             default: '#F7F7FD',
                             paper: '#fefcfe',
                         },
+                        text: {
+                            secondary: '#1D182F',
+                        },
                         divider: '#1D182F',
                     }),
                     ...(mode === 'dark' && {
                         primary: {
-                            main: '#C88EE4',
+                            main: '#998BE5',
                         },
                         background: {
                             default: '#1D182F',
                             paper: '#231F35',
+                        },
+                        text: {
+                            secondary: '#F7F7FD',
                         },
                         divider: '#F7F7FD',
                     }),
                     secondary: {
                         main: '#f50057',
                     },
-                    text: {
-                        secondary: '#7268DC',
-                    },
+                    
                 }
             }),
         [mode],
