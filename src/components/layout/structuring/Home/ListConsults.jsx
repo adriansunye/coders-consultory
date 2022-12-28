@@ -2,14 +2,25 @@ import axios from "axios"
 import React, { useEffect, useState } from "react";
 import { BiDotsHorizontalRounded, BiUserCircle } from "react-icons/bi";
 import OptionsPopover from "./OptionsPopover";
-import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography } from '@mui/material';
+import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography, Divider, TextField } from '@mui/material';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
+import ShareIcon from '@mui/icons-material/Share';
 
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
-    maxHeight: '100%',
+    maxHeight: '100',
+    borderRadius: '16px'
 });
+
+export const TextFieldWrapper = styled(TextField)`
+    fieldset {
+        border-radius: 16px;
+    }
+`;
 
 export default function ListUser() {
     const [consults, setConsults] = useState([]);
@@ -42,10 +53,9 @@ export default function ListUser() {
     };
 
     function daysDifference(date) {
-
         var diff = new Date().setHours(12) - new Date(date).setHours(12);
-        return Math.round(diff/8.64e7);
-      }
+        return Math.round(diff / 8.64e7);
+    }
 
     return (
         <>
@@ -81,7 +91,7 @@ export default function ListUser() {
                                             <BiDotsHorizontalRounded size="2em" />
                                         </ButtonBase>
                                     </Grid>
-                                    <Grid item container >
+                                    <Grid item container sx={{mt:2}}>
                                         <Typography gutterBottom variant="subtitle1" component="div">
                                             {consult.title}
                                         </Typography>
@@ -93,17 +103,41 @@ export default function ListUser() {
                                     </Grid>
                                     <Grid item container>
                                         <Typography variant="body2">
-                                            {daysDifference(consult.created_at) === 1 ? 
-                                                daysDifference(consult.created_at)+" day" : 
-                                                daysDifference(consult.created_at)+" days" } ago.
+                                            {daysDifference(consult.created_at) === 1 ?
+                                                daysDifference(consult.created_at) + " day" :
+                                                daysDifference(consult.created_at) + " days"} ago.
                                         </Typography>
                                     </Grid>
-                                    
                                 </Grid>
-                                <Grid item sx={{minWidth: 350, maxWidth: 350}}>
-                                <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
-                            </Grid>
-
+                                <Grid item sx={{ minWidth: 350, maxWidth: 350 }}>
+                                    <Img alt="consult image" src={consult.image_path === null ? "placeholder" : consult.image_path} />
+                                </Grid>
+                                <Grid item xs={10} container>
+                                    <IconButton sx={{ mt: 1 }}>
+                                        <FavoriteBorderOutlinedIcon />
+                                    </IconButton>
+                                    <IconButton sx={{ mt: 1 }}>
+                                        <TextsmsOutlinedIcon />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item sx={{ mt: 1 }}>
+                                    <IconButton >
+                                        <ShareIcon />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item xs={12} sx={{ mt: 2 }}>
+                                    <Divider color="divider" variant="middle" />
+                                </Grid>
+                                <Grid item xs={12} container sx={{ mt: 2 }}>
+                                    <IconButton sx={{ p: 0 }}>
+                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    </IconButton>
+                                    <Box component="form"
+                                        autoComplete="off"
+                                        sx={{ ml: 1, flexGrow: 1 }}>
+                                        <TextFieldWrapper fullWidth id="addCommentInput" placeholder="Write a comment..." variant="outlined" />
+                                    </Box>
+                                </Grid>
                             </Grid>
                         </Paper>
                     </Box>

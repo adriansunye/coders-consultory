@@ -7,7 +7,7 @@ export const ColorModeContext = createContext({
 });
 
 export const ColorModeProvider = ({ children }) => {
-    const [mode, setMode] = useState("light");
+    const [mode, setMode] = useState("dark");
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
@@ -31,15 +31,17 @@ export const ColorModeProvider = ({ children }) => {
                             default: '#F7F7FD',
                             paper: '#fefcfe',
                         },
+                        divider: '#1D182F',
                     }),
                     ...(mode === 'dark' && {
                         primary: {
                             main: '#C88EE4',
                         },
                         background: {
-                            default: '#1D192F',
-                            paper: '#262138',
+                            default: '#1D182F',
+                            paper: '#231F35',
                         },
+                        divider: '#F7F7FD',
                     }),
                     secondary: {
                         main: '#f50057',
