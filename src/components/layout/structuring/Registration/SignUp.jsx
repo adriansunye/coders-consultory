@@ -56,6 +56,7 @@ const SignUp = () => {
         const data = { ...otherInputs }
         const parsedData = JSON.stringify(data);
         body.append('_jsonData', parsedData);
+        console.log(inputs)
 
         axios.post('http://localhost:8888/coders-consultory-server/api/users', body).then(function (response) {
             console.log(response.data);

@@ -7,6 +7,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareIcon from '@mui/icons-material/Share';
+import useAxiosCustom from "../../../../services/Providers/useAxiosCustom";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -57,8 +58,21 @@ export default function ListUser() {
         return Math.round(diff / 8.64e7);
     }
 
+    const [data, setData] = useState(null);
+    const [todo, isError, isLoading] = useAxiosCustom({
+          url: 'http://127.0.0.1:8888/coders-consultory-server/api/',
+          method: 'get',
+    });
+
+    useEffect(() => {
+       if(todo && todo.data) setData(todo.data)
+       console.log(data)
+    }, [todo]);
+
     return (
         <>
+        {isError && <p>{isError.message}</p>}
+                {data && 
             <Box sx={{ m: 1, pb: 8, backgroundColor: "background.default" }}>
                 {consults.map((consult, key) =>
                     <Box key={key} display="flex"
@@ -143,7 +157,7 @@ export default function ListUser() {
                     </Box>
                 )}
                 <OptionsPopover deleteConsult={deleteConsult} destination={destination} id={id} open={open} anchorEl={anchorEl} onClose={() => handleClose()} />
-            </Box>
+            </Box>}
         </>
 
     )

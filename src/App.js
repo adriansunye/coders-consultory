@@ -5,15 +5,17 @@ import './App.scss';
 
 import {PageProvider} from "@services/Providers/PageProvider"
 import { ColorModeProvider } from '@services/Providers/ColorModeProvider';
-
+import { AxiosInstanceProvider } from '@services/Providers/AxiosInstanceProvider';
 
 function App() {
   return (
-    <PageProvider>
+    <AxiosInstanceProvider config={{ baseURL: "http://127.0.0.1:8888/coders-consultory-server/api/" }}>
+      <PageProvider>
       <ColorModeProvider>
           <PublicRoute/>
       </ColorModeProvider>
     </PageProvider>
+    </AxiosInstanceProvider>
   );
 }
 
