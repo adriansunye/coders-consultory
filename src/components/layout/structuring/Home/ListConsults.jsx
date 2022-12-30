@@ -1,13 +1,11 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react";
-import { BiDotsHorizontalRounded, BiUserCircle } from "react-icons/bi";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import OptionsPopover from "./OptionsPopover";
 import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography, Divider, TextField } from '@mui/material';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareIcon from '@mui/icons-material/Share';
-import useAxiosCustom from "../../../../services/Providers/useAxiosCustom";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -33,6 +31,7 @@ export default function ListUser() {
     useEffect(() => {
         getConsults();
     }, []);
+
     function getConsults() {
         axios.get('http://localhost:8888/coders-consultory-server/api/consults/').then(function (response) {
             console.log(response.data);
@@ -52,27 +51,12 @@ export default function ListUser() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     function daysDifference(date) {
         var diff = new Date().setHours(12) - new Date(date).setHours(12);
         return Math.round(diff / 8.64e7);
     }
-
-    const [data, setData] = useState(null);
-    const [todo, isError, isLoading] = useAxiosCustom({
-          url: 'http://127.0.0.1:8888/coders-consultory-server/api/',
-          method: 'get',
-    });
-
-    useEffect(() => {
-       if(todo && todo.data) setData(todo.data)
-       console.log(data)
-    }, [todo]);
-
     return (
         <>
-        {isError && <p>{isError.message}</p>}
-                {data && 
             <Box sx={{ m: 1, pb: 8, backgroundColor: "background.default" }}>
                 {consults.map((consult, key) =>
                     <Box key={key} display="flex"
@@ -157,7 +141,7 @@ export default function ListUser() {
                     </Box>
                 )}
                 <OptionsPopover deleteConsult={deleteConsult} destination={destination} id={id} open={open} anchorEl={anchorEl} onClose={() => handleClose()} />
-            </Box>}
+            </Box>
         </>
 
     )

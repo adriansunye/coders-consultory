@@ -9,7 +9,7 @@ import { AxiosInstanceProvider } from '@services/Providers/AxiosInstanceProvider
 
 function App() {
   return (
-    <AxiosInstanceProvider config={{ baseURL: "http://127.0.0.1:8888/coders-consultory-server/api/" }}>
+    <AxiosInstanceProvider>
       <PageProvider>
       <ColorModeProvider>
           <PublicRoute/>

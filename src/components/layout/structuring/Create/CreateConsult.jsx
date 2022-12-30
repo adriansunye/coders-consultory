@@ -17,21 +17,21 @@ const Img = styled('img')({
 export default function CreateConsult() {
     const { setPage } = usePage();
     const navigate = useNavigate();
+    
     const [inputs, setInputs] = useState([]);
-    const fileInput = useRef();
-    const submitForm = useRef();
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
+
+    const fileInput = useRef();
+    const submitForm = useRef();
 
     useEffect(() => {
         if (!selectedFile) {
             setPreview(undefined)
             return
         }
-
         const objectUrl = URL.createObjectURL(selectedFile)
         setPreview(objectUrl)
-
         // free memory when ever this component is unmounted
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
@@ -59,9 +59,7 @@ export default function CreateConsult() {
             navigate('/');
         });
     }
-
     return (
-
         <>
             <Box sx={{ m: 1 }} fullWidth
                 justifyContent="center"
@@ -184,7 +182,6 @@ export default function CreateConsult() {
                     </Grid>
                 </Grid>
             </Box>
-
             <Divider sx={{ mt: 3 }} color="divider" variant="middle" />
             <Grid container display="flex"
                 justifyContent="center"
@@ -207,8 +204,6 @@ export default function CreateConsult() {
                     </Grid>
                 </Grid>
             </Grid>
-
         </>
-
     )
 }
