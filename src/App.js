@@ -3,19 +3,20 @@ import { PublicRoute } from '@components/routing/PublicRoute/PublicRoute';
 
 import './App.scss';
 
-import {PageProvider} from "@services/Providers/PageProvider"
+import { PageProvider } from "@services/Providers/PageProvider"
 import { ColorModeProvider } from '@services/Providers/ColorModeProvider';
-import { AxiosInstanceProvider } from '@services/Providers/AxiosInstanceProvider';
+import { UsernameProvider } from '@services/Providers/UsernameProvider';
+import { UserDataProvider } from './services/Providers/UserDataProvider';
 
 function App() {
   return (
-    <AxiosInstanceProvider>
-      <PageProvider>
-      <ColorModeProvider>
-          <PublicRoute/>
-      </ColorModeProvider>
-    </PageProvider>
-    </AxiosInstanceProvider>
+    <UsernameProvider>
+        <PageProvider>
+          <ColorModeProvider>
+            <PublicRoute />
+          </ColorModeProvider>
+        </PageProvider>
+    </UsernameProvider>
   );
 }
 

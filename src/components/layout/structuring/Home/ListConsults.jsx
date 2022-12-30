@@ -6,6 +6,11 @@ import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography, D
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareIcon from '@mui/icons-material/Share';
+import useUsername from "@services/Providers/UsernameProvider";
+import useUserData from "@services/Providers/UserDataProvider";
+import { UserDataContext } from "../../../../services/Providers/UserDataProvider";
+import { useContext } from "react";
+
 
 const Img = styled('img')({
     margin: 'auto',
@@ -22,16 +27,15 @@ export const TextFieldWrapper = styled(TextField)`
 `;
 
 export default function ListUser() {
+    
     const [consults, setConsults] = useState([]);
     const [anchorEl, setAnchorEl] = useState();
     const [destination, setDestination] = useState();
+    const {username} = useUsername();
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    useEffect(() => {
-        getConsults();
-    }, []);
-
+    
     function getConsults() {
         axios.get('http://localhost:8888/coders-consultory-server/api/consults/').then(function (response) {
             console.log(response.data);
@@ -55,9 +59,27 @@ export default function ListUser() {
         var diff = new Date().setHours(12) - new Date(date).setHours(12);
         return Math.round(diff / 8.64e7);
     }
+
+    const { userData, fetchUser } = useUserData();
+    const[displayJokes, setDisplayJokes] = useState(false)
+
+    const checkUserData = () => {
+        setDisplayJokes(true)
+    }
+   
+
+    useEffect(() => {
+        getConsults();
+        fetchUser();
+    }, []);
+
     return (
         <>
             <Box sx={{ m: 1, pb: 8, backgroundColor: "background.default" }}>
+            <button onClick={checkUserData}>GET-J O K E S</button>
+           
+            {displayJokes ? <p>{userData.username}</p> : null}
+
                 {consults.map((consult, key) =>
                     <Box key={key} display="flex"
                         justifyContent="center"
@@ -81,7 +103,7 @@ export default function ListUser() {
                                             <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                                         </IconButton>
                                         <Box sx={{ mt: 1, ml: 1 }}>
-                                            {consult.user}
+                                            {consult.username}
                                         </Box>
                                     </Grid>
                                     <Grid item>
