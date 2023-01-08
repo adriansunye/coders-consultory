@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import usePage from "@services/Providers/PageProvider"
-import useUserData from "@services/Providers/useUserData";
+import useUserData from "@services/Hooks/useUserData";
 import useCoder from '@services/Providers/CoderProvider';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,8 @@ import useUsername from "@services/Providers/UsernameProvider";
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
-    maxWidth: '350px',
-    maxHeight: '100',
+    maxWidth: '200px',
+    maxHeight: '50',
     borderRadius: '16px'
 });
 
@@ -28,6 +28,7 @@ export default function CreateConsult() {
     const [inputs, setInputs] = useState({ coder: coder, username: username });
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
+    const [invalid, setInvalid] = useState({title: false, description: false})
 
     const fileInput = useRef();
     const submitForm = useRef();
@@ -52,6 +53,9 @@ export default function CreateConsult() {
         if (event.target.files) {
             setSelectedFile(value)
         }
+        else{
+            setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
+        }
         setInputs(values => ({ ...values, [name]: value }));
     }
 
@@ -69,9 +73,14 @@ export default function CreateConsult() {
             navigate('/');
         });
     }
+
+    const handleInvalid = (event) => {
+        const name = event.target.name;
+        setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
+    }
     return (
         <>
-            <Box sx={{ m: 1 }} fullWidth
+            <Box sx={{ m: 1}} fullWidth
                 justifyContent="center"
                 alignItems="center"
                 enctype='multipart/form-data'
@@ -81,7 +90,7 @@ export default function CreateConsult() {
             >
 
                 <Typography sx={{
-                   p:1,
+                    p:1,
                     mx: 2,
                     
                     flexGrow: 1,
@@ -108,6 +117,9 @@ export default function CreateConsult() {
                             <Grid item xs direction="column">
                                 <Grid item xs>
                                     <TextFieldWrapper
+                                        error={invalid.title}
+                                        onInvalid={handleInvalid}
+                                        required
                                         fullWidth
                                         id="titleInput"
                                         multiline
@@ -142,6 +154,9 @@ export default function CreateConsult() {
                             <Grid item xs direction="column" >
                                 <Grid item xs>
                                     <TextFieldWrapper
+                                        error={invalid.description}
+                                        onInvalid={handleInvalid}
+                                        required
                                         fullWidth
                                         placeholder="What's on your mind?"
                                         multiline
@@ -183,7 +198,7 @@ export default function CreateConsult() {
                     alignItems="center" >
                     <Grid item xs={12} sm container>
                         <Grid item xs direction="column">
-                            <Grid item sx={{ minWidth: 350, maxWidth: 350 }}>
+                            <Grid item sx={{ minWidth: 100, maxWidth: 100 }}>
                                 {selectedFile && <Img alt="consult image" src={preview} />}
                             </Grid>
                         </Grid>
@@ -191,7 +206,7 @@ export default function CreateConsult() {
                 </Grid>
             </Box>
             <Divider sx={{ mt: 3 }} color="divider" variant="middle" />
-            <Grid container display="flex"
+            <Grid sx={{pb:8}} container display="flex"
                 justifyContent="center"
                 alignItems="center"
             >

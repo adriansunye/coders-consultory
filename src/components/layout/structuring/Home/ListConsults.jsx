@@ -6,10 +6,9 @@ import { styled, ButtonBase, IconButton, Avatar, Paper, Box, Grid, Typography, D
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ShareIcon from '@mui/icons-material/Share';
-import useUserData from "@services/Providers/useUserData";
+import useUserData from "@services/Hooks/useUserData";
 import Placeholder from '@assets/download.png'
-
-
+import useUsername from "@services/Providers/UsernameProvider";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -33,6 +32,7 @@ export default function ListUser() {
     const { userData, fetchUser } = useUserData();
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+    const { username } = useUsername();
 
     useEffect(() => {
         fetchUser();
@@ -96,7 +96,10 @@ export default function ListUser() {
                                         </Box>
                                     </Grid>
                                     <Grid item>
-                                        <ButtonBase name={consult.id} aria-describedby={id} variant="contained" onClick={handleClick} >
+                                        <ButtonBase name={consult.id} aria-describedby={id} variant="contained" 
+                                        onClick= {consult.username === username || 
+                                                (userData && userData.admin === 1) 
+                                                ? handleClick : ""}>
                                             <BiDotsHorizontalRounded size="2em" />
                                         </ButtonBase>
                                     </Grid>

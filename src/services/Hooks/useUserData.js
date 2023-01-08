@@ -1,18 +1,6 @@
-import {useState, createContext } from "react";
+import {useState } from "react";
 import axios from "axios";
-import useUsername from "./UsernameProvider";
-
-export const UserDataContext = createContext()
-
-export const UserDataProvider = ({ children }) => {
-    const [userData, setUserData] = useState();
-    
-    return (
-        <UserDataProvider.Provider value={{ userData, setUserData }}>
-            {children}
-        </UserDataProvider.Provider>
-    );
-};
+import useUsername from "../Providers/UsernameProvider";
 
 const useUserData = () => {
     const [userData, setUserData] = useState(); 

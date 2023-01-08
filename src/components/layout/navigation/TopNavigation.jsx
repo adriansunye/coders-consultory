@@ -6,7 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { BiGridHorizontal } from "react-icons/bi";
 import {AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip} from '@mui/material';
 import UserMenu from "@components/layout/navigation/TopNavigationMenus/UserMenu";
-import useUserData from "@services/Providers/useUserData";
+import useUserData from "@services/Hooks/useUserData";
 
 const settings = ['Profile', 'Account', 'Theme', 'Logout'];
 
@@ -26,6 +26,7 @@ const TopNavigation = () => {
 
     useEffect(() => {
         fetchUser();
+        console.log(userData)
     }, []);
 
     return (

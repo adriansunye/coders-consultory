@@ -1,22 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid, styled, Typography, Paper, Box, Avatar, Button, IconButton, ButtonBase } from "@mui/material";
+import { Grid, Typography, Paper, Box, Avatar, Button, IconButton, ButtonBase } from "@mui/material";
 import OptionsPopover from "../Home/OptionsPopover";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { TextFieldWrapper } from "../Home/ListConsults";
-import useUserData from "@services/Providers/useUserData";
+import useUserData from "@services/Hooks/useUserData";
 
-
-
-
-const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-    borderRadius: '16px'
-});
 
 export default function UpdateConsult() {
     const { userData, fetchUser } = useUserData();
@@ -25,6 +15,7 @@ export default function UpdateConsult() {
     const { id } = useParams();
     const [anchorEl, setAnchorEl] = useState();
     const [destination, setDestination] = useState();
+    const [invalid, setInvalid] = useState({title: false, description: false})
     const open = Boolean(anchorEl);
     const idPopover = open ? 'simple-popover' : undefined;
     useEffect(() => {
@@ -55,6 +46,8 @@ export default function UpdateConsult() {
         const name = event.target.name;
         const value = event.target.value;
         setInputs(values => ({ ...values, [name]: value }));
+        setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
+        
     }
     const handleClick = (event) => {
         setDestination(event.currentTarget.name)
@@ -62,6 +55,11 @@ export default function UpdateConsult() {
     }
     const handleClose = () => {
         setAnchorEl(null);
+    }
+
+    const handleInvalid = (event) => {
+        const name = event.target.name;
+        setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
     }
 
     
@@ -102,6 +100,9 @@ export default function UpdateConsult() {
                             </Grid>
                             <Grid item container sx={{ mt: 2 }}>
                                 <TextFieldWrapper
+                                    error={invalid.title}
+                                    onInvalid={handleInvalid}
+                                    required
                                     fullWidth
                                     sx={{ my: 1 }}
                                     id="titleInput"
@@ -116,6 +117,9 @@ export default function UpdateConsult() {
                             </Grid>
                             <Grid item container>
                                 <TextFieldWrapper
+                                    error={invalid.description}
+                                    onInvalid={handleInvalid}
+                                    required
                                     fullWidth
                                     sx={{ my: 1 }}
                                     multiline

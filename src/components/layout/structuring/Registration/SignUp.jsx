@@ -1,4 +1,4 @@
-import { Box, IconButton, Container, Typography, Grid, Input, Button, InputLabel, FormControl, OutlinedInput, InputAdornment } from "@mui/material"
+import { Box, IconButton, Container, Typography, Grid, Button, InputLabel, FormControl, OutlinedInput, InputAdornment, styled } from "@mui/material"
 import usePage from "@services/Providers/PageProvider"
 import useUsername from "@services/Providers/UsernameProvider";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -8,6 +8,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '50',
+    borderRadius: '16px'
+});
 
 const SignUp = () => {
     const { setPage } = usePage();
@@ -60,17 +68,13 @@ const SignUp = () => {
         const data = { ...otherInputs }
         const parsedData = JSON.stringify(data);
         body.append('_jsonData', parsedData);
-        console.log(inputs)
+        setUsername(inputs.user)
 
         axios.post('http://localhost:8888/coders-consultory-server/api/users', body).then(function (response) {
             setUsername(inputs.user)
             setPage("home")
             navigate("/")
         });
-    }
-
-    function checkUser() {
-        console.log(username)
     }
 
     return (
@@ -84,7 +88,7 @@ const SignUp = () => {
                         component={RouterLink}
                         color="inherit"
                         to="/login"
-                        onClick={() => setPage("home")}
+                        onClick={() => setPage("login")}
                     >
                         <ArrowBackIosNewIcon />
                     </IconButton>
@@ -177,7 +181,6 @@ const SignUp = () => {
                             <Button onClick={() => fileInput.current.click()} sx={{ p: 2 }}>
                                 Add Picture
                             </Button>
-                            <Button onClick={checkUser} sx={{ p: 2 }}>Check User</Button>
                         </Grid>
                         <input
                             name="fileMedia"
@@ -186,6 +189,17 @@ const SignUp = () => {
                             onChange={handleChange}
                             style={{ display: 'none' }}
                         />
+                        <Grid container display="flex"
+                    justifyContent="center"
+                    alignItems="center" >
+                    <Grid item xs={12} sm container>
+                        <Grid item xs >
+                            <Grid item sx={{ minWidth: 100, maxWidth: 100 }}>
+                                {selectedFile && <Img alt="consult image" src={preview} />}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
                     </Grid>
                     <Grid item xs sx={{ p: 2 }}>
                         <Button
