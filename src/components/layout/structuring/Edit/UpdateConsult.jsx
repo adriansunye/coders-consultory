@@ -5,6 +5,9 @@ import { Grid, styled, Typography, Paper, Box, Avatar, Button, IconButton, Butto
 import OptionsPopover from "../Home/OptionsPopover";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { TextFieldWrapper } from "../Home/ListConsults";
+import useUserData from "@services/Providers/useUserData";
+
+
 
 
 const Img = styled('img')({
@@ -16,6 +19,7 @@ const Img = styled('img')({
 });
 
 export default function UpdateConsult() {
+    const { userData, fetchUser } = useUserData();
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const { id } = useParams();
@@ -24,6 +28,7 @@ export default function UpdateConsult() {
     const open = Boolean(anchorEl);
     const idPopover = open ? 'simple-popover' : undefined;
     useEffect(() => {
+        fetchUser();
         getConsult();
     }, []);
     function getConsult() {
@@ -84,7 +89,7 @@ export default function UpdateConsult() {
                         <Grid item xs={12} container >
                             <Grid item xs container>
                                 <IconButton sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    <Avatar alt={userData && userData.username} src={userData && userData.profile_picture_path} />
                                 </IconButton>
                                 <Box sx={{ mt: 1, ml: 1 }}>
                                     {inputs.user}

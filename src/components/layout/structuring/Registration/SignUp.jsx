@@ -8,7 +8,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import useUserData from "../../../../services/Providers/UserDataProvider";
 
 const SignUp = () => {
     const { setPage } = usePage();
@@ -64,7 +63,6 @@ const SignUp = () => {
         console.log(inputs)
 
         axios.post('http://localhost:8888/coders-consultory-server/api/users', body).then(function (response) {
-            console.log(response.data);
             setUsername(inputs.user)
             setPage("home")
             navigate("/")

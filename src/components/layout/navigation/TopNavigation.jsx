@@ -1,16 +1,19 @@
 import usePage from "@services/Providers/PageProvider"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import AdbIcon from '@mui/icons-material/Adb'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { BiGridHorizontal } from "react-icons/bi";
 import {AppBar, Box, Toolbar, IconButton, Typography, Container, Avatar, Tooltip} from '@mui/material';
 import UserMenu from "@components/layout/navigation/TopNavigationMenus/UserMenu";
+import useUserData from "@services/Providers/useUserData";
 
 const settings = ['Profile', 'Account', 'Theme', 'Logout'];
 
 const TopNavigation = () => {
     const { page, setPage } = usePage();
+    const { userData, fetchUser } = useUserData();
+
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -20,6 +23,10 @@ const TopNavigation = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     return (
         <>
@@ -90,7 +97,7 @@ const TopNavigation = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={userData && userData.username} src={userData && userData.profile_picture_path} />
                                 </IconButton>
                             </Tooltip>
                             <UserMenu settings={settings} handleCloseUserMenu={handleCloseUserMenu} anchorElUser={anchorElUser} />

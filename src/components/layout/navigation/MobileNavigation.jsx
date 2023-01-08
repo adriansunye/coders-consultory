@@ -23,7 +23,7 @@ const MobileNavigation = () => {
                 >
                     <BottomNavigationAction component={RouterLink} to="/" label="Home" value="home" icon={<BiHomeCircle />} />
                     <BottomNavigationAction component={RouterLink} label="Search" value="search" icon={<BiSearch />} />
-                    <BottomNavigationAction component={RouterLink} to="/consult/create" label="Create" value="create" icon={<BiAddToQueue />} />
+                    <BottomNavigationAction component={RouterLink} to="/consult/selectCoder" label="Create" value="create" icon={<BiAddToQueue />} />
                     <BottomNavigationAction component={RouterLink} label="Favorites" value="favorites" icon={<BiHeart />} />
                     <BottomNavigationAction component={RouterLink} label="Profile" value="profile" icon={<BiUserCircle />} />
                 </BottomNavigation>

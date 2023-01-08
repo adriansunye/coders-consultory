@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import usePage from "@services/Providers/PageProvider"
+import useUserData from "@services/Providers/useUserData";
+import useCoder from '@services/Providers/CoderProvider';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Grid, Paper, Box, InputAdornment, IconButton, Avatar, Divider, Button, styled } from "@mui/material";
+import { Grid, Paper, Box, InputAdornment, IconButton, Avatar, Divider, Button, styled, Typography } from "@mui/material";
 import { TextFieldWrapper } from "../Home/ListConsults";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import useUsername from "@services/Providers/UsernameProvider";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -16,16 +19,23 @@ const Img = styled('img')({
 
 export default function CreateConsult() {
     const { setPage } = usePage();
+    const { username } = useUsername();
+    const { userData, fetchUser } = useUserData();
+    const { coder } = useCoder();
+
     const navigate = useNavigate();
-    
-    const [inputs, setInputs] = useState([]);
+
+    const [inputs, setInputs] = useState({ coder: coder, username: username });
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
 
     const fileInput = useRef();
     const submitForm = useRef();
 
+
     useEffect(() => {
+        fetchUser();
+        console.log(inputs)
         if (!selectedFile) {
             setPreview(undefined)
             return
@@ -69,6 +79,18 @@ export default function CreateConsult() {
                 onSubmit={handleSubmit}
                 autoComplete="off"
             >
+
+                <Typography sx={{
+                   p:1,
+                    mx: 2,
+                    
+                    flexGrow: 1,
+                }}
+                    textAlign="center" gutterBottom variant="subtitle1" component="div">
+                    Consulta con {coder === "andrespatino" ?
+                        "el Maestro Andres Patiño" : "la Sensei Rocio Cejudo"}
+                </Typography>
+
                 <Paper elevation={5} sx={{
                     borderRadius: '16px',
                     mx: 2,
@@ -76,9 +98,12 @@ export default function CreateConsult() {
                     flexGrow: 1,
                     backgroundColor: "background.paper"
                 }}>
+
+
                     <Grid container display="flex"
                         justifyContent="center"
                         alignItems="center" >
+
                         <Grid item xs={12} sm container>
                             <Grid item xs direction="column">
                                 <Grid item xs>
@@ -129,7 +154,7 @@ export default function CreateConsult() {
                                             startAdornment: (
                                                 <InputAdornment position="start">
                                                     <IconButton sx={{ p: 0, mt: -10 }}>
-                                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                                        <Avatar alt={userData && userData.username} src={userData && userData.profile_picture_path} />
                                                     </IconButton>
                                                 </InputAdornment>
                                             ),
@@ -147,23 +172,6 @@ export default function CreateConsult() {
                     flexGrow: 1,
                     backgroundColor: "background.paper"
                 }}>
-                    <Grid container display="flex"
-                        justifyContent="center"
-                        alignItems="center" >
-                        <Grid item xs={12} sm container>
-                            <Grid item xs direction="column">
-                                <Grid item xs>
-                                    <TextFieldWrapper
-                                        fullWidth
-                                        id="userInput"
-                                        label="User"
-                                        onChange={handleChange}
-                                        name="user"
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
                 </Paper>
                 <button
                     ref={submitForm}
