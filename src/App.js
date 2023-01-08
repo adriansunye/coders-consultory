@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { PublicRoute } from '@components/routing/PublicRoute/PublicRoute';
+
+import './App.scss';
+
+import { PageProvider } from "@services/Providers/PageProvider"
+import { ColorModeProvider } from '@services/Providers/ColorModeProvider';
+import { UsernameProvider } from '@services/Providers/UsernameProvider';
+import { CoderProvider } from '@services/Providers/CoderProvider';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UsernameProvider>
+      <CoderProvider>
+        <PageProvider>
+          <ColorModeProvider>
+            <PublicRoute />
+          </ColorModeProvider>
+        </PageProvider>
+      </CoderProvider>
+    </UsernameProvider>
   );
 }
+
 
 export default App;
