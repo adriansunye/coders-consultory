@@ -9,21 +9,21 @@ This project is currently in development. Users can make appointments, but can't
 ## Project Screen Shots
 
 
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/1.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/2.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/3.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/4.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/5.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/6.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/7.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/8.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/9.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/10.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/11.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/12.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/13.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/14.png?raw=true)
-![login](https://github.com/adriansunye/coders-consultory-client/development/blob/public/screenshots/15.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/1.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/2.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/3.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/4.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/5.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/6.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/7.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/8.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/9.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/10.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/11.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/12.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/13.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/14.png?raw=true)
+![login](https://github.com/adriansunye/coders-consultory-client/blob/development/public/screenshots/15.png?raw=true)
 
 ## Installation and Setup Instructions
 
