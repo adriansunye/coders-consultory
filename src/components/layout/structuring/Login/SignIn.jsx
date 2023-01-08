@@ -32,13 +32,20 @@ const SignUp = () => {
         setInputs(values => ({ ...values, [name]: value }));
     }
 
+    const checkSuccess = (data) => {
+        if(data){
+            setUsername(inputs.user)
+            setPage("home")
+            navigate("/")
+        }
+        
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
         axios.get(`http://localhost:8888/coders-consultory-server/api/users/${inputs.user}/checkUser`).then(function (response) {
-            setUsername(inputs.user)
-            setPage("home")
-            navigate("/")
+            checkSuccess(response.data);
         });
     }
 
@@ -50,7 +57,7 @@ const SignUp = () => {
                 onSubmit={handleSubmit}
                 alignItems="center"
             >
-                <Grid sx={{ p: 4 , flexGrow: 1,}}>
+                <Grid sx={{ p: 4 , flexGrow: 1}}>
                     <Grid container  alignItems="center">
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Sign in to your account</Typography>
                     </Grid>

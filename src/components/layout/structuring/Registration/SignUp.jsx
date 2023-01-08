@@ -19,8 +19,13 @@ const Img = styled('img')({
 
 const SignUp = () => {
     const { setPage } = usePage();
-    const { username, setUsername } = useUsername();
-
+    const { setUsername } = useUsername();
+    const [error, setError] = useState({
+        username: '',
+        email: '',
+        passwordToCheck: '',
+        password: ''
+    })
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -33,9 +38,9 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const fileInput = useRef();
-    const submitForm = useRef();
     const [selectedFile, setSelectedFile] = useState()
     const [preview, setPreview] = useState()
+    const [invalid, setInvalid] = useState({ title: false, description: false })
 
     useEffect(() => {
         if (!selectedFile) {
@@ -56,31 +61,75 @@ const SignUp = () => {
         if (event.target.files) {
             setSelectedFile(value)
         }
+        else {
+            setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
+        }
         setInputs(values => ({ ...values, [name]: value }));
     }
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        const { fileMedia, ...otherInputs } = inputs;
-        const body = new FormData();
-        body.append('image', inputs.fileMedia);
-        const data = { ...otherInputs }
-        const parsedData = JSON.stringify(data);
-        body.append('_jsonData', parsedData);
-        setUsername(inputs.user)
-
-        axios.post('http://localhost:8888/coders-consultory-server/api/users', body).then(function (response) {
+        const isEmpty = Object.values(error).some(err => err !== "")
+        if (!isEmpty) {
+            const { fileMedia, ...otherInputs } = inputs;
+            const body = new FormData();
+            body.append('image', inputs.fileMedia);
+            const data = { ...otherInputs }
+            const parsedData = JSON.stringify(data);
+            body.append('_jsonData', parsedData);
             setUsername(inputs.user)
-            setPage("home")
-            navigate("/")
+
+            axios.post('http://localhost:8888/coders-consultory-server/api/users', body).then(function (response) {
+                setUsername(inputs.user)
+                setPage("home")
+                navigate("/")
+            });
+        }
+    }
+
+    const handleInvalid = (event) => {
+        const name = event.target.name;
+        setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
+    }
+
+    const validateInput = e => {
+        let { name, value } = e.target;
+        setError(prev => {
+            const stateObj = { ...prev, [name]: "" };
+
+            switch (name) {
+                case "passwordToCheck":
+                    if (inputs.password && value !== inputs.password) {
+                        stateObj["password"] = "Password and Confirm Password does not match.";
+                        setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
+                    } else {
+                        setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
+                        stateObj["password"] = inputs.password ? "" : error.password;
+                    }
+                    break;
+
+                case "password":
+                    if (inputs.passwordToCheck && value !== inputs.passwordToCheck) {
+                        setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
+                        stateObj[name] = "Password and Confirm Password does not match.";
+                    } else {
+                        setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
+                        stateObj[name] = inputs.password ? "" : error.password;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            return stateObj;
         });
     }
 
     return (
         <>
             <Box sx={{ flexGrow: 1, mt: 2, display: { xs: 'flex', md: 'none' } }}>
-                
+
                 <Container maxWidth="xl">
                     <IconButton
                         size="large"
@@ -102,7 +151,7 @@ const SignUp = () => {
                 alignItems="center"
             >
 
-                <Grid sx={{ p: 4 }}>
+                <Grid sx={{ p: 4, flexGrow: 1 }}>
                     <Grid container display="flex" alignItems="center">
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Create New Account</Typography>
                     </Grid>
@@ -111,6 +160,10 @@ const SignUp = () => {
                     </Grid>
                     <Grid item container sx={{ mt: 2 }}>
                         <TextFieldWrapper
+                            error={invalid.user}
+                            onInvalid={handleInvalid}
+                            required
+                            autoComplete="off"
                             fullWidth
                             onChange={handleChange}
                             sx={{ my: 1 }}
@@ -121,7 +174,11 @@ const SignUp = () => {
                     </Grid>
                     <Grid item container sx={{ mt: 2 }}>
                         <TextFieldWrapper
+                            error={invalid.email}
+                            onInvalid={handleInvalid}
+                            required
                             fullWidth
+                            autoComplete="off"
                             onChange={handleChange}
                             sx={{ my: 1 }}
                             id="emailInput"
@@ -133,6 +190,10 @@ const SignUp = () => {
                         <FormControl sx={{ my: 1 }} fullWidth variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
+                                error={invalid.passwordToCheck}
+                                onInvalid={handleInvalid}
+                                onBlur={validateInput}
+                                required
                                 sx={{ borderRadius: "16px" }}
                                 id="outlined-adornment-password"
                                 type={showPassword ? 'text' : 'password'}
@@ -150,13 +211,17 @@ const SignUp = () => {
                                     </InputAdornment>
                                 }
                                 label="Password"
-                            />
+                            />{error.passwordToCheck && <span className='err'>{error.passwordToCheck}</span>}
                         </FormControl>
                     </Grid>
                     <Grid item container sx={{ mt: 2 }}>
                         <FormControl sx={{ my: 1 }} fullWidth variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password-confirm">Confirm Password</InputLabel>
                             <OutlinedInput fullWidth
+                                error={invalid.password}
+                                onInvalid={handleInvalid}
+                                onBlur={validateInput}
+                                required
                                 sx={{ borderRadius: "16px" }}
                                 id="outlined-adornment-password-confirm"
                                 type={showPassword ? 'text' : 'password'}
@@ -175,7 +240,7 @@ const SignUp = () => {
                                     </InputAdornment>
                                 }
                                 label="Confirm Password"
-                            />
+                            />{error.password && <span className='err'>{error.password}</span>}
                         </FormControl>
                         <Grid item xs container>
                             <Button onClick={() => fileInput.current.click()} sx={{ p: 2 }}>
@@ -190,16 +255,16 @@ const SignUp = () => {
                             style={{ display: 'none' }}
                         />
                         <Grid container display="flex"
-                    justifyContent="center"
-                    alignItems="center" >
-                    <Grid item xs={12} sm container>
-                        <Grid item xs >
-                            <Grid item sx={{ minWidth: 100, maxWidth: 100 }}>
-                                {selectedFile && <Img alt="consult image" src={preview} />}
+                            justifyContent="center"
+                            alignItems="center" >
+                            <Grid item xs={12} sm container>
+                                <Grid item xs >
+                                    <Grid item sx={{ minWidth: 100, maxWidth: 100 }}>
+                                        {selectedFile && <Img alt="consult image" src={preview} />}
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
                     </Grid>
                     <Grid item xs sx={{ p: 2 }}>
                         <Button
