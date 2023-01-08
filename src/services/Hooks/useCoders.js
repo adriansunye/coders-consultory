@@ -6,7 +6,6 @@ const useCoders = () => {
     const fetchCoders = () => {
         axios.get(`http://localhost:8888/coders-consultory-server/api/users/admin`).then(function (response) {
             setCoders(response.data)
-            console.log(response.data)
         });
     };
 

@@ -26,7 +26,6 @@ const TopNavigation = () => {
 
     useEffect(() => {
         fetchUser();
-        console.log(userData)
     }, []);
 
     return (

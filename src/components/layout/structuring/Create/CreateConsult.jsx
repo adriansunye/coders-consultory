@@ -36,7 +36,6 @@ export default function CreateConsult() {
 
     useEffect(() => {
         fetchUser();
-        console.log(inputs)
         if (!selectedFile) {
             setPreview(undefined)
             return
@@ -68,7 +67,6 @@ export default function CreateConsult() {
         const parsedData = JSON.stringify(data);
         body.append('_jsonData', parsedData);
         axios.post('http://localhost:8888/coders-consultory-server/api/consults', body).then(function (response) {
-            console.log(response.data);
             setPage("home")
             navigate('/');
         });
@@ -92,7 +90,6 @@ export default function CreateConsult() {
                 <Typography sx={{
                     p:1,
                     mx: 2,
-                    
                     flexGrow: 1,
                 }}
                     textAlign="center" gutterBottom variant="subtitle1" component="div">

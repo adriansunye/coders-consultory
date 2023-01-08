@@ -68,6 +68,7 @@ export default function ComplexGrid() {
                                     </Grid>
                                     <Grid item xs>
                                     <Button
+                                        id={coder.username}
                                         onClick={handleClick}
                                         fullWidth
                                         variant="contained"

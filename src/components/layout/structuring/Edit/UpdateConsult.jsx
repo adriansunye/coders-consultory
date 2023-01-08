@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid, Typography, Paper, Box, Avatar, Button, IconButton, ButtonBase } from "@mui/material";
+import { styled, Grid, Typography, Paper, Box, Avatar, Button, IconButton, ButtonBase } from "@mui/material";
 import OptionsPopover from "../Home/OptionsPopover";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { TextFieldWrapper } from "../Home/ListConsults";
 import useUserData from "@services/Hooks/useUserData";
+import Placeholder from '@assets/download.png'
 
+
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100',
+    borderRadius: '16px'
+});
 
 export default function UpdateConsult() {
     const { userData, fetchUser } = useUserData();
@@ -15,7 +24,7 @@ export default function UpdateConsult() {
     const { id } = useParams();
     const [anchorEl, setAnchorEl] = useState();
     const [destination, setDestination] = useState();
-    const [invalid, setInvalid] = useState({title: false, description: false})
+    const [invalid, setInvalid] = useState({ title: false, description: false })
     const open = Boolean(anchorEl);
     const idPopover = open ? 'simple-popover' : undefined;
     useEffect(() => {
@@ -24,21 +33,17 @@ export default function UpdateConsult() {
     }, []);
     function getConsult() {
         axios.get(`http://localhost:8888/coders-consultory-server/api/consults/${id}`).then(function (response) {
-            console.log(response.data);
             setInputs(response.data);
         });
     }
     const deleteConsult = (id) => {
         axios.delete(`http://localhost:8888/coders-consultory-server/api/consults/${id}`).then(function (response) {
-            console.log(response.data);
             navigate('/');
         });
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(inputs)
         axios.put(`http://localhost:8888/coders-consultory-server/api/consults/${id}`, inputs).then(function (response) {
-            console.log(response.data);
             navigate('/');
         });
     }
@@ -47,7 +52,7 @@ export default function UpdateConsult() {
         const value = event.target.value;
         setInputs(values => ({ ...values, [name]: value }));
         setInvalid(values => ({ ...values, [name]: invalid.name ? true : false }));
-        
+
     }
     const handleClick = (event) => {
         setDestination(event.currentTarget.name)
@@ -62,15 +67,15 @@ export default function UpdateConsult() {
         setInvalid(values => ({ ...values, [name]: invalid.name ? false : true }));
     }
 
-    
+
     return (
         <Box sx={{ m: 1, backgroundColor: "background.default" }}>
             <Box display="flex"
                 justifyContent="center"
                 alignItems="center"
                 component="form"
-                                    onSubmit={handleSubmit}
-                                    autoComplete="off"
+                onSubmit={handleSubmit}
+                autoComplete="off"
             >
                 <Paper elevation={5} sx={{
                     borderRadius: '13px',
@@ -133,22 +138,25 @@ export default function UpdateConsult() {
                                 />
                             </Grid>
                         </Grid>
+                        <Grid item sx={{ mt: 2, minWidth: 350, maxWidth: 350 }}>
+                            <Img alt="consult image" src={inputs.image_path === "no image" ? Placeholder : inputs.image_path} />
+                        </Grid>
                         <Grid item xs={12} container >
-                    <Grid item xs container sx={{ p: 2 }}>
-                    <Typography variant="body2">
-                                Last updated at: {inputs.updated_at === '0000-00-00 00:00:00' ? inputs.created_at : inputs.updated_at}
-                            </Typography>
-                    </Grid>
-                    <Grid item xs sx={{ p: 2 }}>
-                        <Button
-                            fullWidth
-                            type="submit"
-                            variant="contained"
-                            color="primary">
-                            Update Consult
-                        </Button>
-                    </Grid>
-                </Grid>
+                            <Grid item xs container sx={{ p: 2 }}>
+                                <Typography variant="body2">
+                                    Last updated at: {inputs.updated_at === '0000-00-00 00:00:00' ? inputs.created_at : inputs.updated_at}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs sx={{ p: 2 }}>
+                                <Button
+                                    fullWidth
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary">
+                                    Update Consult
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Paper>
             </Box>
